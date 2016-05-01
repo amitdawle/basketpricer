@@ -4,6 +4,7 @@ import com.ad.Basket;
 import com.ad.Item;
 import com.ad.pricing.SimpleBasketPricer;
 import com.ad.promotions.BuyOneGetOneFreePromotion;
+import com.ad.promotions.BuyOneGetOneHalfPricePromotion;
 import com.ad.promotions.BuyTwoGetOneFreePromotion;
 import org.junit.Test;
 
@@ -166,6 +167,33 @@ public class SimpleBasketPricerTest {
 
         assertThat( Item.Apple.getPrice().add(Item.Apple.getPrice()), is(result1));
     }
+
+    @Test
+    public void priceCalculatedCorrectlyWithBuyOneGetOneHalfPriceDiscount(){
+        Basket b = mock(Basket.class);
+        when(b.getItems())
+                .thenReturn(newArrayList(Item.Banana, Item.Banana));
+
+        SimpleBasketPricer pricer = new SimpleBasketPricer();
+        BigDecimal result  = pricer.price(b, new BuyOneGetOneHalfPricePromotion(Item.Banana));
+
+        assertThat( Item.Banana.getPrice().multiply(BigDecimal.valueOf(1.5)), is(result));
+    }
+
+    @Test
+    public void priceCalculatedCorrectlyForBOGOFAndBuyOneGetOneHalfPrice(){
+        Basket b = mock(Basket.class);
+        when(b.getItems())
+                .thenReturn(newArrayList(Item.Banana, Item.Banana, Item.Apple, Item.Apple));
+
+        SimpleBasketPricer pricer = new SimpleBasketPricer();
+        BigDecimal result  = pricer.price(b, new BuyOneGetOneFreePromotion(Item.Apple) , new BuyOneGetOneHalfPricePromotion(Item.Banana));
+
+        BigDecimal expected = Item.Banana.getPrice().multiply(BigDecimal.valueOf(1.5));
+        expected = expected.add(Item.Apple.getPrice());
+        assertThat(expected, is(result));
+    }
+
 
 
 
