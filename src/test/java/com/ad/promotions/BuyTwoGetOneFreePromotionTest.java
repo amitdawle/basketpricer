@@ -1,3 +1,5 @@
+package com.ad.promotions;
+
 import com.ad.Basket;
 import com.ad.Discount;
 import com.ad.Item;

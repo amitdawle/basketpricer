@@ -1,3 +1,5 @@
+package com.ad.promotions;
+
 import com.ad.Basket;
 import com.ad.Discount;
 import com.ad.Item;
@@ -69,8 +71,8 @@ public class BuyOneGetOneFreePromotionTest {
         Discount d = promotion.applyOnce(b);
 
         assertThat(Item.Apple.getPrice(), is(d.getAmount()));
-        assertThat( d.getDiscountedItems(), hasItem(Item.Apple));
-        assertThat( 2, is(d.getDiscountedItems().size()) );
+        assertThat(d.getDiscountedItems(), hasItem(Item.Apple));
+        assertThat(2, is(d.getDiscountedItems().size()) );
 
     }
 

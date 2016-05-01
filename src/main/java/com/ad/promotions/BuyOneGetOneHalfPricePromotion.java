@@ -10,9 +10,9 @@ import java.util.Objects;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-public class BuyOneGetOneFreePromotion extends MultiBuyPromotion {
+public class BuyOneGetOneHalfPricePromotion extends MultiBuyPromotion {
 
-    public BuyOneGetOneFreePromotion(@Nonnull Item eligibleItem) {
+    public BuyOneGetOneHalfPricePromotion(@Nonnull Item eligibleItem) {
         super(newArrayList(eligibleItem));
     }
 
@@ -24,7 +24,7 @@ public class BuyOneGetOneFreePromotion extends MultiBuyPromotion {
             return ZERO_DISCOUNT;
         } else{
             List<Item> discountedItems = eligibleForDiscount.subList(0, 2);
-            BigDecimal discount = discountedItems.get(0).getPrice();
+            BigDecimal discount = discountedItems.get(0).getPrice().multiply(BigDecimal.valueOf(0.5));
             return new Discount(discount, discountedItems);
         }
     }

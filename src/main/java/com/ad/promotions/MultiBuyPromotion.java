@@ -19,7 +19,7 @@ abstract class MultiBuyPromotion implements Promotion{
     protected List<Item> itemsUnderOffer;
 
     MultiBuyPromotion(@Nonnull List<Item> itemsUnderOffer){
-        Objects.requireNonNull(itemsUnderOffer , "Items under offer should not be null");
+        Objects.requireNonNull(itemsUnderOffer, "Items under offer should not be null");
         this.itemsUnderOffer = itemsUnderOffer;
     }
 

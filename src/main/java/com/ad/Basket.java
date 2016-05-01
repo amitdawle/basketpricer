@@ -17,10 +17,10 @@ public class Basket {
     }
 
     public void addItem(Item item){
-        items.add(requireNonNull(item,"Item cannot be null"));
+        items.add(requireNonNull(item, "Item cannot be null"));
     }
 
-    public Collection<Item> getItems(){
-        return  Collections.unmodifiableCollection(items);
+    public List<Item> getItems(){
+        return  Collections.unmodifiableList(items);
     }
 }

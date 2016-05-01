@@ -1,3 +1,5 @@
+package com.ad.pricing;
+
 import com.ad.Basket;
 import com.ad.Item;
 import com.ad.pricing.SimpleBasketPricer;

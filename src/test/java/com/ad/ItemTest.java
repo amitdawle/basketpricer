@@ -1,3 +1,5 @@
+package com.ad;
+
 import com.ad.Item;
 import org.junit.Test;
 
