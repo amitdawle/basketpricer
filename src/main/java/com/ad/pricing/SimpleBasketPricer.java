@@ -15,7 +15,7 @@ import java.util.Objects;
 public class SimpleBasketPricer implements BasketPricer {
 
     @Nonnull
-    private BigDecimal price(@Nonnull Basket b) {
+    protected BigDecimal price(@Nonnull Basket b) {
         Objects.requireNonNull(b , "Basket should not be null");
 
         if( b.getItems() == null ){
@@ -47,7 +47,7 @@ public class SimpleBasketPricer implements BasketPricer {
         return amount.subtract(totalDiscount);
     }
 
-    private Basket basketWithoutDiscountedItems(Basket b , List<Item> discountedItems){
+    protected Basket basketWithoutDiscountedItems(Basket b , List<Item> discountedItems){
         Basket basketWithoutDiscountedItems = new Basket();
         List<Item> itemsInBasket =  new ArrayList<>(b.getItems());
 

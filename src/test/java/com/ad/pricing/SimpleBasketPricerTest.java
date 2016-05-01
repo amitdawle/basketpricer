@@ -15,6 +15,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -28,10 +29,10 @@ public class SimpleBasketPricerTest {
         Basket b = mock(Basket.class);
         when(b.getItems()).thenReturn(Collections.<Item>emptyList());
 
-        SimpleBasketPricer pricer = new SimpleBasketPricer();
+        BasketPricer pricer = new SimpleBasketPricer();
         BigDecimal result  = pricer.price(null);
 
-        assertThat(BigDecimal.ZERO, is(result));
+        fail("Should not come here. Null element must throw exception");
     }
 
     @Test
@@ -39,7 +40,7 @@ public class SimpleBasketPricerTest {
         Basket b = mock(Basket.class);
         when(b.getItems()).thenReturn(Collections.<Item>emptyList());
 
-        SimpleBasketPricer pricer = new SimpleBasketPricer();
+        BasketPricer pricer = new SimpleBasketPricer();
         BigDecimal result  = pricer.price(b);
 
         assertThat(BigDecimal.ZERO, is(result));
@@ -50,7 +51,7 @@ public class SimpleBasketPricerTest {
         Basket b = mock(Basket.class);
         when(b.getItems()).thenReturn(newArrayList(Item.Apple));
 
-        SimpleBasketPricer pricer = new SimpleBasketPricer();
+        BasketPricer pricer = new SimpleBasketPricer();
         BigDecimal result  = pricer.price(b);
 
         assertThat(BigDecimal.valueOf(0.60), is(result));
@@ -61,7 +62,7 @@ public class SimpleBasketPricerTest {
         Basket b = mock(Basket.class);
         when(b.getItems()).thenReturn(newArrayList(Item.Apple,Item.Apple,Item.Banana, Item.Apple));
 
-        SimpleBasketPricer pricer = new SimpleBasketPricer();
+        BasketPricer pricer = new SimpleBasketPricer();
         BigDecimal result  = pricer.price(b);
 
         assertThat(Item.Apple.getPrice().multiply(BigDecimal.valueOf(3)).add(Item.Banana.getPrice()), is(result));
@@ -72,7 +73,7 @@ public class SimpleBasketPricerTest {
         Basket b = mock(Basket.class);
         when(b.getItems()).thenReturn(newArrayList(Item.Apple,Item.Apple,Item.Banana, Item.Apple));
 
-        SimpleBasketPricer pricer = new SimpleBasketPricer();
+        BasketPricer pricer = new SimpleBasketPricer();
         BigDecimal result  = pricer.price(b, new BuyTwoGetOneFreePromotion(Item.Apple));
 
         assertThat(Item.Apple.getPrice().multiply(BigDecimal.valueOf(2)).add(Item.Banana.getPrice()), is(result));
@@ -84,7 +85,7 @@ public class SimpleBasketPricerTest {
         Basket b = mock(Basket.class);
         when(b.getItems()).thenReturn(newArrayList(Item.Apple,Item.Apple,Item.Apple, Item.Apple));
 
-        SimpleBasketPricer pricer = new SimpleBasketPricer();
+        BasketPricer pricer = new SimpleBasketPricer();
         BigDecimal result  = pricer.price(b, new BuyOneGetOneFreePromotion(Item.Apple));
 
         assertThat(Item.Apple.getPrice().multiply(BigDecimal.valueOf(2)), is(result));
@@ -96,7 +97,7 @@ public class SimpleBasketPricerTest {
         when(b.getItems())
                 .thenReturn(newArrayList(Item.Banana,Item.Apple,Item.Apple,Item.Apple, Item.Apple, Item.Banana));
 
-        SimpleBasketPricer pricer = new SimpleBasketPricer();
+        BasketPricer pricer = new SimpleBasketPricer();
         BigDecimal result  = pricer.price(b, new BuyOneGetOneFreePromotion(Item.Apple), new BuyOneGetOneFreePromotion(Item.Banana));
 
         assertThat(Item.Apple.getPrice().multiply(BigDecimal.valueOf(2)).add(Item.Banana.getPrice()), is(result));
@@ -110,7 +111,7 @@ public class SimpleBasketPricerTest {
         when(b.getItems())
                 .thenReturn(newArrayList(Item.Banana,Item.Apple,Item.Apple,Item.Apple, Item.Apple, Item.Banana, Item.Banana));
 
-        SimpleBasketPricer pricer = new SimpleBasketPricer();
+        BasketPricer pricer = new SimpleBasketPricer();
         BigDecimal result  = pricer.price(b, new BuyTwoGetOneFreePromotion(Item.Apple), new BuyTwoGetOneFreePromotion(Item.Banana));
 
         BigDecimal toPay = BigDecimal.ZERO;
@@ -133,7 +134,7 @@ public class SimpleBasketPricerTest {
         when(b.getItems())
                 .thenReturn(newArrayList(Item.Banana, Item.Apple, Item.Apple, Item.Apple, Item.Apple, Item.Banana, Item.Banana));
 
-        SimpleBasketPricer pricer = new SimpleBasketPricer();
+        BasketPricer pricer = new SimpleBasketPricer();
         BigDecimal result1  = pricer.price(b, new BuyTwoGetOneFreePromotion(Item.Apple), new BuyTwoGetOneFreePromotion(Item.Banana));
 
         BigDecimal result2  = pricer.price(b, new BuyTwoGetOneFreePromotion(Item.Banana), new BuyTwoGetOneFreePromotion(Item.Apple) );
@@ -147,7 +148,7 @@ public class SimpleBasketPricerTest {
         when(b.getItems())
                 .thenReturn(newArrayList(Item.Banana, Item.Apple, Item.Apple, Item.Apple, Item.Banana ));
 
-        SimpleBasketPricer pricer = new SimpleBasketPricer();
+        BasketPricer pricer = new SimpleBasketPricer();
         BigDecimal result1  = pricer.price(b, new BuyTwoGetOneFreePromotion(Item.Apple), new BuyTwoGetOneFreePromotion(Item.Banana));
 
         BigDecimal result2  = pricer.price(b, new BuyTwoGetOneFreePromotion(Item.Banana),new BuyTwoGetOneFreePromotion(Item.Apple) );
@@ -162,7 +163,7 @@ public class SimpleBasketPricerTest {
         when(b.getItems())
                 .thenReturn(newArrayList( Item.Apple, Item.Apple));
 
-        SimpleBasketPricer pricer = new SimpleBasketPricer();
+        BasketPricer pricer = new SimpleBasketPricer();
         BigDecimal result1  = pricer.price(b, new BuyOneGetOneFreePromotion(Item.Banana));
 
         assertThat( Item.Apple.getPrice().add(Item.Apple.getPrice()), is(result1));
@@ -174,7 +175,7 @@ public class SimpleBasketPricerTest {
         when(b.getItems())
                 .thenReturn(newArrayList(Item.Banana, Item.Banana));
 
-        SimpleBasketPricer pricer = new SimpleBasketPricer();
+        BasketPricer pricer = new SimpleBasketPricer();
         BigDecimal result  = pricer.price(b, new BuyOneGetOneHalfPricePromotion(Item.Banana));
 
         assertThat( Item.Banana.getPrice().multiply(BigDecimal.valueOf(1.5)), is(result));
@@ -186,7 +187,7 @@ public class SimpleBasketPricerTest {
         when(b.getItems())
                 .thenReturn(newArrayList(Item.Banana, Item.Banana, Item.Apple, Item.Apple));
 
-        SimpleBasketPricer pricer = new SimpleBasketPricer();
+        BasketPricer pricer = new SimpleBasketPricer();
         BigDecimal result  = pricer.price(b, new BuyOneGetOneFreePromotion(Item.Apple) , new BuyOneGetOneHalfPricePromotion(Item.Banana));
 
         BigDecimal expected = Item.Banana.getPrice().multiply(BigDecimal.valueOf(1.5));

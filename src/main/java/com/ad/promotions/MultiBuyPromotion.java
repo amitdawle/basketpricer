@@ -5,8 +5,6 @@ import com.ad.Discount;
 import com.ad.Item;
 
 import javax.annotation.Nonnull;
-import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -15,7 +13,6 @@ import static java.util.Objects.requireNonNull;
 
 abstract class MultiBuyPromotion implements Promotion{
 
-    protected  static final Discount ZERO_DISCOUNT = new Discount(BigDecimal.ZERO, Collections.<Item>emptyList());
     protected List<Item> itemsUnderOffer;
 
     MultiBuyPromotion(@Nonnull List<Item> itemsUnderOffer){
@@ -32,7 +29,7 @@ abstract class MultiBuyPromotion implements Promotion{
                 .collect(Collectors.toList());
 
         if(eligibleItems.isEmpty() ) {
-            return ZERO_DISCOUNT;
+            return Discount.ZERO_DISCOUNT;
         }
         return applyDiscount(eligibleItems);
     }

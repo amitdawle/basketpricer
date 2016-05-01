@@ -21,7 +21,7 @@ public class BuyTwoGetOneFreePromotion extends MultiBuyPromotion {
     protected Discount applyDiscount(List<Item> eligibleForDiscount) {
         Objects.requireNonNull(eligibleForDiscount, "Items eligible for discount must not be null");
         if( eligibleForDiscount.size() < 3 ) {
-            return ZERO_DISCOUNT;
+            return Discount.ZERO_DISCOUNT;
         } else{
             List<Item> discountedItems = eligibleForDiscount.subList(0, 3);
             BigDecimal discount = discountedItems.get(0).getPrice();

@@ -9,6 +9,8 @@ import java.util.Objects;
 
 public class Discount {
 
+    public static final Discount ZERO_DISCOUNT = new Discount(BigDecimal.ZERO, Collections.<Item>emptyList());
+
     private BigDecimal amount;
     private List<Item> discountedItems;
 
