@@ -1,6 +1,7 @@
 package com.ad;
 
-import javax.validation.constraints.NotNull;
+
+import javax.annotation.Nonnull;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
@@ -12,7 +13,7 @@ public class Discount {
     private List<Item> discountedItems;
 
 
-    public Discount(@NotNull BigDecimal amount, @NotNull List<Item> items) {
+    public Discount(@Nonnull BigDecimal amount, @Nonnull List<Item> items) {
         Objects.requireNonNull(amount);
         Objects.requireNonNull(items);
         this.amount = amount;
@@ -20,10 +21,12 @@ public class Discount {
     }
 
 
+    @Nonnull
     public BigDecimal getAmount() {
         return amount;
     }
 
+    @Nonnull
     public List<Item>  getDiscountedItems(){
         return discountedItems;
     }

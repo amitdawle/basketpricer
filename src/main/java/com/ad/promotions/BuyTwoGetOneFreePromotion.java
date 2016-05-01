@@ -4,37 +4,31 @@ import com.ad.Basket;
 import com.ad.Discount;
 import com.ad.Item;
 
-import javax.validation.constraints.NotNull;
+import javax.annotation.Nonnull;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static java.util.Objects.requireNonNull;
+import static com.google.common.collect.Lists.newArrayList;
 
-public class BuyTwoGetOneFreePromotion implements Promotion {
+public class BuyTwoGetOneFreePromotion extends MultiBuyPromotion {
 
-    private Item itemUnderOffer;
-
-    public BuyTwoGetOneFreePromotion(@NotNull  Item eligibleItem) {
-        requireNonNull(eligibleItem, "Item under offer should not be null");
-        this.itemUnderOffer = eligibleItem;
+    public BuyTwoGetOneFreePromotion(@Nonnull Item eligibleItem) {
+        super(newArrayList(eligibleItem));
     }
 
 
     @Override
-    public Discount applyOnce(@NotNull Basket b) {
-        requireNonNull(b, "basket should not be null");
-        List<Item> eligibleItems = b.getItems()
-                                        .stream()
-                                        .filter(x -> itemUnderOffer == x)
-                                        .collect(Collectors.toList());
-
-        if(eligibleItems.size() < 3 ) {
-            return new Discount(BigDecimal.ZERO, Collections.<Item>emptyList());
+    protected Discount applyDiscount(List<Item> eligibleForDiscount) {
+        Objects.requireNonNull(eligibleForDiscount , "Items eligible for discount must not be null");
+        if( eligibleForDiscount.size() < 3 ) {
+            return ZERO_DISCOUNT;
+        } else{
+            List<Item> discountedItems = eligibleForDiscount.subList(0, 3);
+            BigDecimal discount = discountedItems.get(0).getPrice();
+            return new Discount(discount, discountedItems);
         }
-        List<Item> discountedItems = eligibleItems.subList(0,3);
-        BigDecimal discount = discountedItems.get(0).getPrice();
-        return new Discount(discount, discountedItems);
     }
 }

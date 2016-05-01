@@ -3,14 +3,16 @@ package com.ad.pricing;
 import com.ad.Basket;
 import com.ad.Item;
 
-import javax.validation.constraints.NotNull;
+
+import javax.annotation.Nonnull;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 public class SimpleBasketPricer implements BasketPricer {
 
     @Override
-    public BigDecimal price(@NotNull Basket b) {
+    @Nonnull
+    public BigDecimal price(@Nonnull Basket b) {
         Objects.requireNonNull(b , "Basket should not be null");
 
         if( b.getItems() == null ){
