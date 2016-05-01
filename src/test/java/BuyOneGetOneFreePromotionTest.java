@@ -35,28 +35,27 @@ public class BuyOneGetOneFreePromotionTest {
     @Test
     public void discountAppliedOnceForBasketWithEligibleItems(){
         Basket b = mock(Basket.class);
-        when(b.getItems()).thenReturn(newArrayList(Item.Apple,Item.Apple));
+        when(b.getItems()).thenReturn(newArrayList(Item.Apple, Item.Apple));
         BuyOneGetOneFreePromotion promotion = new BuyOneGetOneFreePromotion(Item.Apple);
 
         Discount d = promotion.applyOnce(b);
 
 
-        assertThat(Item.Apple.getPrice() , is(d.getAmount()));
-        assertThat( d.getDiscountedItems() , hasItem(Item.Apple));
-        assertThat( 2 , is(d.getDiscountedItems().size()) );
+        assertThat(Item.Apple.getPrice(), is(d.getAmount()));
+        assertThat( d.getDiscountedItems(), hasItem(Item.Apple));
+        assertThat( 2, is(d.getDiscountedItems().size()) );
     }
 
     @Test
     public void noDiscountAppliedOnceForBasketWithoutEligibleItems(){
         Basket b = mock(Basket.class);
-        when(b.getItems()).thenReturn(newArrayList(Item.Apple,Item.Banana));
+        when(b.getItems()).thenReturn(newArrayList(Item.Apple, Item.Banana));
         BuyOneGetOneFreePromotion promotion = new BuyOneGetOneFreePromotion(Item.Apple);
 
         Discount d = promotion.applyOnce(b);
 
-
-        assertThat(BigDecimal.ZERO , is(d.getAmount()));
-        assertThat( 0 , is( d.getDiscountedItems().size()) );
+        assertThat(BigDecimal.ZERO, is(d.getAmount()));
+        assertThat( 0, is( d.getDiscountedItems().size()) );
 
     }
 
@@ -64,14 +63,14 @@ public class BuyOneGetOneFreePromotionTest {
     @Test
     public void discountAppliedForBasketWithMultipleItems(){
         Basket b = mock(Basket.class);
-        when(b.getItems()).thenReturn(newArrayList(Item.Apple,Item.Banana,Item.Apple,Item.Apple));
+        when(b.getItems()).thenReturn(newArrayList(Item.Apple, Item.Banana, Item.Apple, Item.Apple));
         BuyOneGetOneFreePromotion promotion = new BuyOneGetOneFreePromotion(Item.Apple);
 
         Discount d = promotion.applyOnce(b);
 
-        assertThat(Item.Apple.getPrice() , is(d.getAmount()));
-        assertThat( d.getDiscountedItems() , hasItem(Item.Apple));
-        assertThat( 2 , is(d.getDiscountedItems().size()) );
+        assertThat(Item.Apple.getPrice(), is(d.getAmount()));
+        assertThat( d.getDiscountedItems(), hasItem(Item.Apple));
+        assertThat( 2, is(d.getDiscountedItems().size()) );
 
     }
 

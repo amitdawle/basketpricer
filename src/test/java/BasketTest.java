@@ -16,9 +16,9 @@ public class BasketTest {
         b.addItem(Item.Apple);
         b.addItem(Item.Banana);
 
-        assertThat(3 , is(b.getItems().size()));
-        assertThat(2L , is(b.getItems().stream().filter(x -> x == Item.Apple ).count()));
-        assertThat(1L , is(b.getItems().stream().filter(x -> x == Item.Banana ).count()));
+        assertThat(3, is(b.getItems().size()));
+        assertThat(2L, is(b.getItems().stream().filter(x -> x == Item.Apple ).count()));
+        assertThat(1L, is(b.getItems().stream().filter(x -> x == Item.Banana ).count()));
     }
 
     @Test(expected = NullPointerException.class)
@@ -28,8 +28,8 @@ public class BasketTest {
         b.addItem(Item.Apple);
         b.addItem(null);
 
-        assertThat(3 , is(b.getItems().size()));
-        assertThat(2L , is(b.getItems().stream().filter(x -> x == Item.Apple ).count()));
-        assertThat(1L , is(b.getItems().stream().filter(x -> x == Item.Banana ).count()));
+        assertThat(3, is(b.getItems().size()));
+        assertThat(2L, is(b.getItems().stream().filter(x -> x == Item.Apple ).count()));
+        assertThat(1L, is(b.getItems().stream().filter(x -> x == Item.Banana ).count()));
     }
 }

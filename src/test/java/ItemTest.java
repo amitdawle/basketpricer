@@ -9,7 +9,7 @@ public class ItemTest {
 
     @Test
     public void itemsHaveCorrectPrice(){
-        assertEquals(Item.Apple.getPrice() , BigDecimal.valueOf(0.60));
+        assertEquals(Item.Apple.getPrice(), BigDecimal.valueOf(0.60));
         assertEquals(Item.Banana.getPrice(), BigDecimal.valueOf(0.30));
     }
 
