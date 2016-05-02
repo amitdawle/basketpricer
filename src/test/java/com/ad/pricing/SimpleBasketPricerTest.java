@@ -47,7 +47,7 @@ public class SimpleBasketPricerTest {
      }
 
     @Test
-    public void priceBasketWithOneItem(){
+    public void basketPricedCorrectlyWithOneItem(){
         Basket b = mock(Basket.class);
         when(b.getItems()).thenReturn(newArrayList(Item.Apple));
 
@@ -58,7 +58,7 @@ public class SimpleBasketPricerTest {
     }
 
     @Test
-    public void priceBasketWithSomeItems(){
+    public void basketPricedCorrectlyWithSomeItems(){
         Basket b = mock(Basket.class);
         when(b.getItems()).thenReturn(newArrayList(Item.Apple,Item.Apple,Item.Banana, Item.Apple));
 
@@ -69,7 +69,7 @@ public class SimpleBasketPricerTest {
     }
 
     @Test
-    public void priceBasketWithSomeItemsAndBuyTwoGetOneFreeDiscount(){
+    public void basketPricedCorrectlyWithSomeItemsAndBuyTwoGetOneFreeDiscount(){
         Basket b = mock(Basket.class);
         when(b.getItems()).thenReturn(newArrayList(Item.Apple,Item.Apple,Item.Banana, Item.Apple));
 
@@ -81,7 +81,7 @@ public class SimpleBasketPricerTest {
 
 
     @Test
-    public void priceBasketWithSomeItemsAndBuyOneGetOneFreeDiscount(){
+    public void basketPricedCorrectlyWithSomeItemsAndBuyOneGetOneFreeDiscount(){
         Basket b = mock(Basket.class);
         when(b.getItems()).thenReturn(newArrayList(Item.Apple,Item.Apple,Item.Apple, Item.Apple));
 
@@ -92,7 +92,7 @@ public class SimpleBasketPricerTest {
     }
 
     @Test
-    public void priceBasketWithSomeItemsAndBuyOneGetOneFreeDiscountOnMultipleItems(){
+    public void basketPricedCorrectlyWithSomeItemsAndBuyOneGetOneFreeDiscountOnMultipleItems(){
         Basket b = mock(Basket.class);
         when(b.getItems())
                 .thenReturn(newArrayList(Item.Banana,Item.Apple,Item.Apple,Item.Apple, Item.Apple, Item.Banana));
@@ -106,7 +106,7 @@ public class SimpleBasketPricerTest {
 
 
     @Test
-    public void priceBasketWithSomeItemsAndBuyTwoGetOneFreeDiscountOnMultipleItems(){
+    public void basketPricedCorrectlyWithSomeItemsAndBuyTwoGetOneFreeDiscountOnMultipleItems(){
         Basket b = mock(Basket.class);
         when(b.getItems())
                 .thenReturn(newArrayList(Item.Banana,Item.Apple,Item.Apple,Item.Apple, Item.Apple, Item.Banana, Item.Banana));
