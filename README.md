@@ -26,7 +26,7 @@ My implementation of the *popular* interview pre-screening assignment.
 
 - There are two implementations of the pricing algorithm :
  
- - A simple pricer: The pricer takes in a list of promotions and applies them in strict order. The pricer take the fist promotion
+ - A simple pricer: The pricer takes in a list of promotions and applies them in strict order. The pricer takes the fist promotion
    and repeatedly applies it to the basket until no more items qualifying for this offer are left in the basket. It will then move on to the next promotion and so on and so forth. After each application, the creates the copy of the basket minus the items that have been discounted to prevent discounts being applied twice to same item. 
  
  - A discount maximizing pricer: This pricer takes in a list of promotions and tries to find an order which maximizes the discount available to the customer.
