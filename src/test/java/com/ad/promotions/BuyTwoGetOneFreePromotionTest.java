@@ -21,7 +21,7 @@ public class BuyTwoGetOneFreePromotionTest {
     public void noDiscountOnEmptyBasket(){
         Basket b = mock(Basket.class);
         when(b.getItems()).thenReturn(Collections.<Item>emptyList());
-        BuyTwoGetOneFreePromotion promotion = new BuyTwoGetOneFreePromotion(Item.Apple);
+        BuyTwoGetOneFreePromotion promotion = new BuyTwoGetOneFreePromotion(Item.Apple, BigDecimal.valueOf(0.6));
 
         Discount d = promotion.applyOnce(b);
 
@@ -33,7 +33,7 @@ public class BuyTwoGetOneFreePromotionTest {
     public void discountAppliedOnceForBasketWithEligibleItems(){
         Basket b = mock(Basket.class);
         when(b.getItems()).thenReturn(newArrayList(Item.Apple, Item.Apple, Item.Apple));
-        BuyTwoGetOneFreePromotion promotion = new BuyTwoGetOneFreePromotion(Item.Apple);
+        BuyTwoGetOneFreePromotion promotion = new BuyTwoGetOneFreePromotion(Item.Apple, BigDecimal.valueOf(0.6));
 
         Discount d = promotion.applyOnce(b);
 
@@ -46,7 +46,7 @@ public class BuyTwoGetOneFreePromotionTest {
     public void noDiscountAppliedOnceForBasketWithoutEligibleItems(){
         Basket b = mock(Basket.class);
         when(b.getItems()).thenReturn(newArrayList(Item.Apple, Item.Banana));
-        BuyTwoGetOneFreePromotion promotion = new BuyTwoGetOneFreePromotion(Item.Apple);
+        BuyTwoGetOneFreePromotion promotion = new BuyTwoGetOneFreePromotion(Item.Apple, BigDecimal.valueOf(0.6));
 
         Discount d = promotion.applyOnce(b);
 
@@ -60,7 +60,7 @@ public class BuyTwoGetOneFreePromotionTest {
     public void discountAppliedForBasketWithMultipleItems(){
         Basket b = mock(Basket.class);
         when(b.getItems()).thenReturn(newArrayList(Item.Apple, Item.Banana, Item.Apple, Item.Apple));
-        BuyTwoGetOneFreePromotion promotion = new BuyTwoGetOneFreePromotion(Item.Apple);
+        BuyTwoGetOneFreePromotion promotion = new BuyTwoGetOneFreePromotion(Item.Apple, BigDecimal.valueOf(0.6));
 
         Discount d = promotion.applyOnce(b);
 
