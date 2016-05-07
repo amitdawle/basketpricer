@@ -3,6 +3,7 @@ package com.ad.promotions;
 import com.ad.Basket;
 import com.ad.Discount;
 import com.ad.Item;
+import static com.ad.Item.*;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -23,7 +24,7 @@ public class BuyOneGetOneFreePromotionTest {
     public void noDiscountOnEmptyBasket(){
         Basket b = mock(Basket.class);
         when(b.getItems()).thenReturn(Collections.<Item>emptyList());
-        Promotion promotion = buyOneGetOneFree(Item.Apple);
+        Promotion promotion = buyOneGetOneFree(Apple);
 
         Discount d = promotion.applyOnce(b);
 
@@ -35,22 +36,22 @@ public class BuyOneGetOneFreePromotionTest {
     @Test
     public void discountAppliedOnceForBasketWithEligibleItems(){
         Basket b = mock(Basket.class);
-        when(b.getItems()).thenReturn(newArrayList(Item.Apple, Item.Apple));
-        Promotion promotion = buyOneGetOneFree(Item.Apple);
+        when(b.getItems()).thenReturn(newArrayList(Apple, Apple));
+        Promotion promotion = buyOneGetOneFree(Apple);
 
         Discount d = promotion.applyOnce(b);
 
 
-        assertThat(Item.Apple.getPrice(), is(d.getAmount()));
-        assertThat( d.getDiscountedItems(), hasItem(Item.Apple));
+        assertThat(Apple.getPrice(), is(d.getAmount()));
+        assertThat( d.getDiscountedItems(), hasItem(Apple));
         assertThat( 2, is(d.getDiscountedItems().size()) );
     }
 
     @Test
     public void noDiscountAppliedOnceForBasketWithoutEligibleItems(){
         Basket b = mock(Basket.class);
-        when(b.getItems()).thenReturn(newArrayList(Item.Apple, Item.Banana));
-        Promotion promotion = buyOneGetOneFree(Item.Apple);
+        when(b.getItems()).thenReturn(newArrayList(Apple, Banana));
+        Promotion promotion = buyOneGetOneFree(Apple);
 
         Discount d = promotion.applyOnce(b);
 
@@ -62,13 +63,13 @@ public class BuyOneGetOneFreePromotionTest {
     @Test
     public void discountAppliedForBasketWithMultipleItems(){
         Basket b = mock(Basket.class);
-        when(b.getItems()).thenReturn(newArrayList(Item.Apple, Item.Banana, Item.Apple, Item.Apple));
-        Promotion promotion = buyOneGetOneFree(Item.Apple);
+        when(b.getItems()).thenReturn(newArrayList(Apple, Banana, Apple, Apple));
+        Promotion promotion = buyOneGetOneFree(Apple);
 
         Discount d = promotion.applyOnce(b);
 
-        assertThat(Item.Apple.getPrice(), is(d.getAmount()));
-        assertThat(d.getDiscountedItems(), hasItem(Item.Apple));
+        assertThat(Apple.getPrice(), is(d.getAmount()));
+        assertThat(d.getDiscountedItems(), hasItem(Apple));
         assertThat(2, is(d.getDiscountedItems().size()) );
     }
 

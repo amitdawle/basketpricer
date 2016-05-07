@@ -3,6 +3,7 @@ package com.ad.promotions;
 import com.ad.Basket;
 import com.ad.Discount;
 import com.ad.Item;
+import static com.ad.Item.*;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -22,7 +23,7 @@ public class BuyOneGetOneHalfPricePromotionTest {
     public void noDiscountOnEmptyBasket(){
         Basket b = mock(Basket.class);
         when(b.getItems()).thenReturn(Collections.<Item>emptyList());
-        Promotion promotion = buyOneGetOneHalfPrice(Item.Apple);
+        Promotion promotion = buyOneGetOneHalfPrice(Apple);
 
         Discount d = promotion.applyOnce(b);
 
@@ -34,21 +35,21 @@ public class BuyOneGetOneHalfPricePromotionTest {
     @Test
     public void discountAppliedOnceForBasketWithEligibleItems(){
         Basket b = mock(Basket.class);
-        when(b.getItems()).thenReturn(newArrayList(Item.Apple, Item.Apple));
-        Promotion promotion = buyOneGetOneHalfPrice(Item.Apple);
+        when(b.getItems()).thenReturn(newArrayList(Apple, Apple));
+        Promotion promotion = buyOneGetOneHalfPrice(Apple);
 
         Discount d = promotion.applyOnce(b);
 
-        assertThat(Item.Apple.getPrice().multiply(BigDecimal.valueOf(0.5)), is(d.getAmount()));
-        assertThat(d.getDiscountedItems(), hasItem(Item.Apple));
+        assertThat(Apple.getPrice().multiply(BigDecimal.valueOf(0.5)), is(d.getAmount()));
+        assertThat(d.getDiscountedItems(), hasItem(Apple));
         assertThat(2, is(d.getDiscountedItems().size()) );
     }
 
     @Test
     public void noDiscountAppliedOnceForBasketWithoutEligibleItems(){
         Basket b = mock(Basket.class);
-        when(b.getItems()).thenReturn(newArrayList(Item.Apple, Item.Banana));
-        Promotion promotion = buyOneGetOneHalfPrice(Item.Apple);
+        when(b.getItems()).thenReturn(newArrayList(Apple, Banana));
+        Promotion promotion = buyOneGetOneHalfPrice(Apple);
 
         Discount d = promotion.applyOnce(b);
 
@@ -61,13 +62,13 @@ public class BuyOneGetOneHalfPricePromotionTest {
     @Test
     public void discountAppliedForBasketWithMultipleItems(){
         Basket b = mock(Basket.class);
-        when(b.getItems()).thenReturn(newArrayList(Item.Apple, Item.Banana, Item.Apple, Item.Apple));
-        Promotion promotion = buyOneGetOneHalfPrice(Item.Apple);
+        when(b.getItems()).thenReturn(newArrayList(Apple, Banana, Apple, Apple));
+        Promotion promotion = buyOneGetOneHalfPrice(Apple);
 
         Discount d = promotion.applyOnce(b);
 
-        assertThat(Item.Apple.getPrice().multiply(BigDecimal.valueOf(0.5)), is(d.getAmount()));
-        assertThat(d.getDiscountedItems(), hasItem(Item.Apple));
+        assertThat(Apple.getPrice().multiply(BigDecimal.valueOf(0.5)), is(d.getAmount()));
+        assertThat(d.getDiscountedItems(), hasItem(Apple));
         assertThat(2, is(d.getDiscountedItems().size()) );
 
     }

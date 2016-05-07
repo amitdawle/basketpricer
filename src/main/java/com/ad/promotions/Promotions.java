@@ -15,21 +15,25 @@ public final class Promotions {
     @Nonnull
     public static Promotion buyOneGetOneFree(@Nonnull Item item) {
         Objects.requireNonNull(item, "Item should not be null");
-        return new PromotionBuilderImpl().on(1, item).offer(1, item).free();
+        return on(1, item).offer(1, item).free();
     }
 
     @Nonnull
     public static Promotion buyOneGetOneHalfPrice(@Nonnull Item item) {
         Objects.requireNonNull(item, "Item should not be null");
-        return new PromotionBuilderImpl().on(1, item).offer(1, item).discountedBy(50);
+        return on(1, item).offer(1, item).discountedBy(50);
     }
 
     @Nonnull
     public static Promotion buyTwoGetOneFree(@Nonnull Item item) {
         Objects.requireNonNull(item, "Item should not be null");
-        return new PromotionBuilderImpl().on(2, item).offer(1, item).free();
+        return on(2, item).offer(1, item).free();
     }
 
+
+    public static OfferBuilder on(int quantity, @Nonnull Item item){
+       return new PromotionBuilderImpl().on(quantity, item);
+    }
 
 
 
