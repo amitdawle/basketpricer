@@ -34,5 +34,13 @@ For example, given the following basket : *[Apple, Apple, Apple, Apple]* and the
  
 - Basket is currently not thread safe. All other classes are thread safe.
 
+## Changes
+- An experimental *fluent* API for building discounts. Discounts can be built as so:
+```java
+ // Buy 1 Apple get 1 free
+ Promotion bogof = Promotions.on(1, Apple).offer(1, Apple).free();
+ // or with static imports
+ Promotion bofog = on(2, Apple).offer(1, Apple).free();
+```
 
 
