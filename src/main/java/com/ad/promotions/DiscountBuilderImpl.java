@@ -5,8 +5,10 @@ import com.ad.Item;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static java.util.Objects.requireNonNull;
 
 
 class DiscountBuilderImpl implements DiscountBuilder {
@@ -17,6 +19,14 @@ class DiscountBuilderImpl implements DiscountBuilder {
     private Item discountedItem;
 
     DiscountBuilderImpl(int quantityThisItem, Item thisItem, int quantityDiscountedItem, Item discountedItem) {
+        if (quantityDiscountedItem <= 0) {
+            throw new IllegalArgumentException("quantityDiscountedItem should be non negative");
+        }
+        if (quantityThisItem <= 0) {
+            throw new IllegalArgumentException("quantityThisItem should be non negative");
+        }
+        requireNonNull(thisItem, "thisItem should not be null");
+        requireNonNull(discountedItem, "discountedItem should not be null");
         this.quantityThisItem = quantityThisItem;
         this.thisItem = thisItem;
         this.quantityDiscountedItem = quantityDiscountedItem;
