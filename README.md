@@ -40,7 +40,7 @@ For example, given the following basket : *[Apple, Apple, Apple, Apple]* and the
  // Buy 1 Apple get 1 free
  Promotion bogof = Promotions.on(1, Apple).offer(1, Apple).free();
  // or with static imports
- Promotion bofog = on(2, Apple).offer(1, Apple).free();
+ Promotion bofog = on(1, Apple).offer(1, Apple).free();
 ```
 
 
