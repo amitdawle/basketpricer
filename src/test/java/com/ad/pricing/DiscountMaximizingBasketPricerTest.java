@@ -2,18 +2,15 @@ package com.ad.pricing;
 
 import com.ad.Basket;
 import com.ad.Item;
-import com.ad.promotions.BuyOneGetOneFreePromotion;
-import com.ad.promotions.BuyOneGetOneHalfPricePromotion;
-import com.ad.promotions.BuyTwoGetOneFreePromotion;
 import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.Collections;
 
+import static com.ad.promotions.Promotions.*;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -73,7 +70,7 @@ public class DiscountMaximizingBasketPricerTest {
         when(b.getItems()).thenReturn(newArrayList(Item.Apple, Item.Apple));
 
         BasketPricer pricer = new DiscountMaximizingBasketPricer();
-        BigDecimal result  = pricer.price(b, new BuyOneGetOneFreePromotion(Item.Apple, BigDecimal.valueOf(0.6)), new BuyOneGetOneHalfPricePromotion(Item.Apple, BigDecimal.valueOf(0.6)));
+        BigDecimal result  = pricer.price(b, buyOneGetOneFree(Item.Apple), buyOneGetOneHalfPrice(Item.Apple));
 
         assertThat(Item.Apple.getPrice() , is(result));
     }
@@ -85,7 +82,7 @@ public class DiscountMaximizingBasketPricerTest {
         when(b.getItems()).thenReturn(newArrayList(Item.Apple, Item.Apple, Item.Apple, Item.Apple));
 
         BasketPricer pricer = new DiscountMaximizingBasketPricer();
-        BigDecimal result  = pricer.price(b, new BuyOneGetOneFreePromotion(Item.Apple, BigDecimal.valueOf(0.6)), new BuyOneGetOneHalfPricePromotion(Item.Apple, BigDecimal.valueOf(0.6)));
+        BigDecimal result  = pricer.price(b, buyOneGetOneFree(Item.Apple), buyOneGetOneHalfPrice(Item.Apple));
 
         // BOGOF should be applied twice in preference to Buy One get One half price
         assertThat(Item.Apple.getPrice().multiply(BigDecimal.valueOf(2)) , is(result));
@@ -98,7 +95,7 @@ public class DiscountMaximizingBasketPricerTest {
         when(b.getItems()).thenReturn(newArrayList(Item.Apple, Item.Apple, Item.Apple, Item.Apple));
 
         BasketPricer pricer = new DiscountMaximizingBasketPricer();
-        BigDecimal result  = pricer.price(b, new BuyTwoGetOneFreePromotion(Item.Apple, BigDecimal.valueOf(0.6)), new BuyOneGetOneFreePromotion(Item.Apple, BigDecimal.valueOf(0.6)));
+        BigDecimal result  = pricer.price(b, buyTwoGetOneFree(Item.Apple), buyOneGetOneFree(Item.Apple));
 
         // BOGOF should be applied twice in preference to Buy Two get One half price
         assertThat(Item.Apple.getPrice().multiply(BigDecimal.valueOf(2)) , is(result));
@@ -111,7 +108,7 @@ public class DiscountMaximizingBasketPricerTest {
         when(b.getItems()).thenReturn(newArrayList(Item.Apple, Item.Apple, Item.Apple, Item.Apple));
 
         BasketPricer pricer = new DiscountMaximizingBasketPricer();
-        BigDecimal result  = pricer.price(b, new BuyTwoGetOneFreePromotion(Item.Apple, BigDecimal.valueOf(0.6)), new BuyOneGetOneHalfPricePromotion(Item.Apple, BigDecimal.valueOf(0.6)),  new BuyOneGetOneFreePromotion(Item.Apple, BigDecimal.valueOf(0.6)));
+        BigDecimal result  = pricer.price(b, buyTwoGetOneFree(Item.Apple), buyOneGetOneHalfPrice(Item.Apple),  buyOneGetOneFree(Item.Apple));
 
         // BOGOF should be applied twice in preference to Buy Two get One half price
         assertThat(Item.Apple.getPrice().multiply(BigDecimal.valueOf(2)) , is(result));
@@ -125,9 +122,9 @@ public class DiscountMaximizingBasketPricerTest {
         when(b.getItems()).thenReturn(newArrayList(Item.Apple, Item.Apple, Item.Banana, Item.Banana,Item.Banana));
 
         BasketPricer pricer = new DiscountMaximizingBasketPricer();
-        BigDecimal result  = pricer.price(b, new BuyTwoGetOneFreePromotion(Item.Banana, BigDecimal.valueOf(0.3)), // Applied
-                                             new BuyOneGetOneHalfPricePromotion(Item.Apple, BigDecimal.valueOf(0.6)), // Discarded
-                                             new BuyOneGetOneFreePromotion(Item.Apple, BigDecimal.valueOf(0.6))); // Applied
+        BigDecimal result  = pricer.price(b, buyTwoGetOneFree(Item.Banana), // Applied
+                                             buyOneGetOneHalfPrice(Item.Apple), // Discarded
+                                             buyOneGetOneFree(Item.Apple)); // Applied
 
         // BOGOF should be applied to Apples and 50% discount on second item for Banana
         BigDecimal expected = Item.Apple.getPrice();

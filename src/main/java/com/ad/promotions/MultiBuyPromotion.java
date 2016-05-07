@@ -5,7 +5,7 @@ import com.ad.Discount;
 import com.ad.Item;
 
 import javax.annotation.Nonnull;
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -14,37 +14,48 @@ import static java.util.Objects.requireNonNull;
 
 abstract class MultiBuyPromotion implements Promotion{
 
-    protected List<Item> itemsUnderOffer;
-    @Nonnull private BigDecimal discountAmount;
+    private List<Item> eligibleItems = null;
+    private List<Item> discountedItems = null;
+    private int requiredNumberOfEligibleItems;
+    private int requiredNumberOfDiscountedItems;
 
-
-    MultiBuyPromotion(@Nonnull List<Item> itemsUnderOffer, @Nonnull BigDecimal amount){
-        Objects.requireNonNull(itemsUnderOffer, "Items under offer should not be null");
-        Objects.requireNonNull(amount, "discount for offer should not be null");
-        this.itemsUnderOffer = itemsUnderOffer;
-        this.discountAmount = amount;
+    MultiBuyPromotion(@Nonnull List<Item> eligibleItems, int requiredNumberOfEligibleItems,
+                      @Nonnull List<Item> discountedItems, int requiredNumberOfDiscountedItems){
+        Objects.requireNonNull(eligibleItems, "Items under offer should not be null");
+        this.eligibleItems = eligibleItems;
+        this.discountedItems = discountedItems;
+        this.requiredNumberOfEligibleItems = requiredNumberOfEligibleItems;
+        this.requiredNumberOfDiscountedItems = requiredNumberOfDiscountedItems;
     }
 
     @Nonnull
    public Discount applyOnce(Basket b) {
         requireNonNull(b, "basket should not be null");
-        List<Item> eligibleItems = b.getItems()
+        List<Item> items = new ArrayList<>(b.getItems());
+        List<Item> c = items
                 .stream()
-                .filter(x -> itemsUnderOffer.contains(x))
+                .filter(x -> eligibleItems.contains(x))
                 .collect(Collectors.toList());
 
-        if(eligibleItems.isEmpty() ) {
+        if( c.size() < requiredNumberOfEligibleItems) {
             return Discount.ZERO_DISCOUNT;
         }
-        int quantityNeededToApplyDiscount =  getItemQuantityNeededToApplyDiscount();
-        if( eligibleItems.size() < quantityNeededToApplyDiscount ) {
+
+        c = c.subList(0, requiredNumberOfEligibleItems);
+        c.forEach(items::remove);
+
+        List<Item> d = items
+                .stream()
+                .filter(x -> discountedItems.contains(x))
+                .collect(Collectors.toList());
+
+        if( d.size() < requiredNumberOfDiscountedItems ) {
             return Discount.ZERO_DISCOUNT;
-        } else{
-            List<Item> discountedItems = eligibleItems.subList(0, quantityNeededToApplyDiscount);
-            return new Discount(discountAmount, discountedItems);
         }
+        d = d.subList(0 , requiredNumberOfDiscountedItems);
+        return applyDiscount(c, d);
     }
 
-    protected abstract int getItemQuantityNeededToApplyDiscount();
+    protected abstract Discount applyDiscount(List<Item> chargeableItems, List<Item> discountedItems);
 
 }
