@@ -26,7 +26,7 @@ public class DiscountMaximizingBasketPricerTest {
         when(b.getItems()).thenReturn(Collections.<Item>emptyList());
 
         BasketPricer pricer = new DiscountMaximizingBasketPricer();
-        BigDecimal result  = pricer.price(null);
+        pricer.price(null);
 
         fail("Should not come here. Null element must throw exception");
 
@@ -51,7 +51,7 @@ public class DiscountMaximizingBasketPricerTest {
         BasketPricer pricer = new DiscountMaximizingBasketPricer();
         BigDecimal result  = pricer.price(b);
 
-        assertThat(BigDecimal.valueOf(0.60), is(result));
+        assertThat(result, is(BigDecimal.valueOf(0.60)));
     }
 
     @Test

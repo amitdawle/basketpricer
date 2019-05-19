@@ -6,6 +6,7 @@ import static com.ad.Item.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
 
 
 public class BasketTest {
@@ -17,9 +18,9 @@ public class BasketTest {
         b.addItem(Apple);
         b.addItem(Banana);
 
-        assertThat(3, is(b.getItems().size()));
-        assertThat(2L, is(b.getItems().stream().filter(x -> x == Apple ).count()));
-        assertThat(1L, is(b.getItems().stream().filter(x -> x == Banana ).count()));
+        assertEquals(3, (b.getItems().size()));
+        assertEquals(2L, (b.getItems().stream().filter(x -> x == Apple ).count()));
+        assertEquals(1L, (b.getItems().stream().filter(x -> x == Banana ).count()));
     }
 
     @Test(expected = NullPointerException.class)
@@ -29,8 +30,8 @@ public class BasketTest {
         b.addItem(Apple);
         b.addItem(null);
 
-        assertThat(3, is(b.getItems().size()));
-        assertThat(2L, is(b.getItems().stream().filter(x -> x == Apple ).count()));
-        assertThat(1L, is(b.getItems().stream().filter(x -> x == Banana ).count()));
+        assertEquals(3, (b.getItems().size()));
+        assertEquals(2L, (b.getItems().stream().filter(x -> x == Apple ).count()));
+        assertEquals(1L, (b.getItems().stream().filter(x -> x == Banana ).count()));
     }
 }
